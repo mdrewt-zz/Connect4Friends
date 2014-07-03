@@ -1,0 +1,5 @@
+<% if @user.is_a? Array %>
+  <a href=""><%= @user.name %> (<%= @user.messages %>)</a> | <a href="">logout</a>
+<% else %>
+  <a href="">register</a> | <a href="">login</a>
+<% end %>
