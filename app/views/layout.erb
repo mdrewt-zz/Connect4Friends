@@ -10,23 +10,6 @@
   <title></title>
 </head>
 <body>
-  <section class="content clearfix">
-    <nav class="clearfix">
-      <div class="logo">Y</div>
-      <div class="left">
-        <h4>Hacker News</h4>
-        <a href="">new</a> | 
-        <a href="">threads</a> | 
-        <a href="">comments</a> | 
-        <a href="">ask</a> | 
-        <a href="">jobs</a> | 
-        <a href="">submit</a>
-      </div>
-      <div class="right">
-        <% erb :login_prompt %>
-      </div>
-    </nav>
-    <%= yield %>
-  </section>
+  <%= yield %>
 </body>
 </html>
