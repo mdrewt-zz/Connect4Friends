@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  // Connect 4 Board object
+  // Connect 4 Board components
   var Column = function() {
     this.max_height = 6;
     this.checkers = [];
@@ -19,7 +19,7 @@ $(document).ready(function() {
   };
 
 
-
+  // Connect 4 Board object
   var ConnectBoard = function() {
     this.board = [
       new Column, new Column, new Column, new Column,
@@ -34,5 +34,33 @@ $(document).ready(function() {
   ConnectBoard.prototype.full? = function() {
     return this.board.filter(function(column) { column.full? }).length === 7;
   };
+
+
+
+  // Connect 4 Board controller
+  var Controller = function() {
+    this.turn = "player1";
+  };
+
+  Controller.prototype.toggleTurn = function() {
+    this.turn = ((this.turn === "player1") ? "player2" : "player1");
+  };
+
+  Controller.prototype.winner? = function(board, column) {
+    // Check if last move connected four
+  };
+
+  Controller.prototype.getBoard = {
+    $.ajax({
+      url: "",
+      success: this.updateBoard(board)
+    });
+  };
+
+  Controller.prototype.updateBoard = function(board) {
+
+  };
+
+  setInterval(Controller.getBoard, 500);
   
 });
