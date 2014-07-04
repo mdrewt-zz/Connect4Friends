@@ -3,3 +3,7 @@ get '/' do
   @Articles = []
   erb :index
 end
+
+get '/connect' do
+  erb :connect
+end
