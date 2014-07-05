@@ -61,6 +61,18 @@ $(document).ready(function() {
 
   };
 
-  setInterval(Controller.getBoard, 500);
+  setInterval(Controller.getBoard(), 500);
+
+
+
+  // Chronological order of events
+  var player = $.ajax({
+    url: "/game/" + game.id + "/playertype",
+    dataType: JSON,
+    success: function(data) { return data }
+  });
   
 });
+
+
+
