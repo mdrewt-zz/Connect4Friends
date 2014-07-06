@@ -1,9 +1,9 @@
 class Move < ActiveRecord::Base
   # Remember to create a migration!
-  belongs_to :user
+  belongs_to :player
   belongs_to :game
 
-  def username
-    self.user.username
+  def playertype
+    self.player.type
   end
 end

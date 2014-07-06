@@ -4,9 +4,9 @@
 
   <div id=<%= i.to_s %> class="column board">
 
-    <% 6.times do %>
+    <% 6.times do |j| %>
 
-      <div class="row board"></div>
+      <div id=<%= "#{i},#{j}" %> class="row board"></div>
 
     <% end %>
 
@@ -30,9 +30,34 @@
       url: window.location.pathname + "/board",
       dataType: "json",
       success: function(data) { board = data; },
-      complete: function() { setTimeout(getBoard, 1000); }
+      complete: function() { setTimeout(getBoard, 500); }
     });
   };
   getBoard();
+
+  function updateBoard() {
+    for (var column = 0; column < board.length; column++) {
+      for (var row = 0; row < board[column].length; row++) {
+        if (board[column][row] == "player1") {
+          var color = "red";
+        } else if (board[column][row] == "player2") {
+          var color = "black";
+        };
+
+        $("#" + column + "," + row).css("background-color", color);
+      };
+    };
+  };
+
+  setInterval(updateBoard, 500);
+
+  $(".column").click(function(e) {
+    e.preventDefault();
+    // check to see if it's your turn
+    // use jquery to select the first empty row in this column
+    // change background color to correct color
+    // submit ajax request
+
+  });
 
 </script>

@@ -27,7 +27,7 @@ $(document).ready(function() {
 			url: window.location.pathname,
 			type: "POST",
 			dataType: "string",
-			data: { new_message : new_message },
+			data: { new_message: new_message },
 			success: function(data) {
 			}
 		});
