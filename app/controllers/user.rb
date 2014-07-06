@@ -8,7 +8,8 @@ post '/login' do
   #sign in
   @user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
   if @user
-    redirect "/#{@user.id}/secret"
+    session[:user_id] = user.id
+    redirect "/users/#{@user.id}"
   else
     @invalid_login = true
     erb :"user/index"
@@ -25,13 +26,13 @@ post '/join' do
 end
 
 get '/signout' do
+  session.clear
 
 end
 
-get '/users/:id/secret' do
-  session[:id] = params[:id]
+get '/users/:id' do
   @user = User.find(params[:id])
-  erb :"user/secret"
+  erb :connect
 end
 
 
