@@ -9,10 +9,10 @@ get '/conversation/:url' do
 end
 
 post '/conversation/:url' do 
-	@conversation = Conversation.where(url: params["url"]).take
-	@message = Message.create(params[:message])
-	@conversation.messages << @message
-	redirect "/conversation/#{@conversation.url}"
+ 	@conversation = Conversation.where(url: params["url"]).take
+ 	@message = Message.create(content: params[:new_message])
+ 	@conversation.messages << @message
+ 	erb :chat
 end
 
 post '/conversation/:url/refresh' do 

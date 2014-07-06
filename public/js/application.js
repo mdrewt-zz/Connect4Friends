@@ -19,19 +19,20 @@ $(document).ready(function() {
 	};
 	refresh();
 
-	// 	// $('#chat').on("submit", function(e) {
-// 	// 	var pathname = window.location.pathname;
-// 	// 	console.log(pathname);
-// 	// 	e.preventDefault();
-// 	// 	$.ajax({
-// 	// 		url: pathname,
-// 	// 		type: "POST",
-// 	// 		dataType: "string".
-// 	// 		success: function(data) {
-// 	// 			$()
-// 	// 		}
-// 	// 	});
-
+	$('#new_message').on("submit", function(e) {
+		e.preventDefault();
+		var new_message = $('#new_message :input').val();
+		$('#conversation').append("<div class='message'>" + new_message + "</div><br>");
+		$.ajax({
+			url: window.location.pathname,
+			type: "POST",
+			dataType: "string",
+			data: { new_message : new_message },
+			success: function(data) {
+				console.log("it's working!!!!!! i love lyfe");
+			}
+		});
+	});
 
 });
 
