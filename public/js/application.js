@@ -8,10 +8,12 @@ $(document).ready(function() {
   		data: { num_messages : num_messages },
 	    url: window.location.pathname + "/refresh", 
 	    success: function(data) {
-	   		$('#conversation').append("<div class='message'>" + data[0].message.content + "</div><br>");
+	    	for (i = 0; i < data.length; i++) {
+	    		$('#conversation').append("<div class='message'>" + data[i].message.content + "</div><br>");
+	    	}	   		
 	    },
 	    complete: function() {
-	      setTimeout(refresh, 5000);
+	      setTimeout(refresh, 10000);
 	    }
 	  });
 	};
