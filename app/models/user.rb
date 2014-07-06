@@ -1,5 +1,8 @@
+require 'bcrypt'
+
 class User < ActiveRecord::Base
-  # Remember to create a migration!
+  has_secure_password
+  
   has_many :players
-  has_many :games through :players
+  has_many :games, through: :players
 end
