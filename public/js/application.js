@@ -4,13 +4,14 @@ $(document).ready(function() {
   	var num_messages = $('div.message').length;
   	$.ajax({
   		type: "POST",
+  		dataType: "json",
   		data: { num_messages : num_messages },
 	    url: window.location.pathname + "/refresh", 
 	    success: function(data) {
-	   		console.log(data);
+	   		$('#conversation').append("<div class='message'>" + data[0].message.content + "</div><br>");
 	    },
 	    complete: function() {
-	      setTimeout(refresh, 100000);
+	      setTimeout(refresh, 5000);
 	    }
 	  });
 	};
