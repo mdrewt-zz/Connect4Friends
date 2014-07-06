@@ -15,3 +15,9 @@ post '/conversation/:url' do
 	redirect "/conversation/#{@conversation.url}"
 end
 
+get '/conversation/:url/refresh' do 
+	ActiveRecord::Base.include_root_in_json = true
+	@conversation = Conversation.where(url: params["url"]).take
+	p "*"*1000
+	return @conversation.messages.to_json
+end
