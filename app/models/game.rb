@@ -3,4 +3,8 @@ class Game < ActiveRecord::Base
   has_many :players
   has_many :users, through: :players
   has_many :moves
+
+  def turns
+    self.moves.length
+  end
 end

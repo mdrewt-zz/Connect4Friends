@@ -15,3 +15,24 @@
 <% end %>
 
 </div>
+
+<script>
+
+  var player = $.ajax({
+    url: window.location.pathname + "/usertype",
+    dataType: "json",
+    success: function(data) { return data; }
+  });
+
+  var board = [];
+  function getBoard() {
+  $.ajax({
+      url: window.location.pathname + "/board",
+      dataType: "json",
+      success: function(data) { board = data; },
+      complete: function() { setTimeout(getBoard, 1000); }
+    });
+  };
+  getBoard();
+
+</script>
