@@ -1,10 +1,12 @@
 $(document).ready(function() {
 
 	function refresh() {
+  	var num_messages = $('div.message').length;
   	$.ajax({
+  		type: "POST",
+  		data: { num_messages : num_messages },
 	    url: window.location.pathname + "/refresh", 
 	    success: function(data) {
-	      var num_messages = $('div.message').length;
 	   		console.log(data);
 	    },
 	    complete: function() {
@@ -13,6 +15,20 @@ $(document).ready(function() {
 	  });
 	};
 	refresh();
+
+	// 	// $('#chat').on("submit", function(e) {
+// 	// 	var pathname = window.location.pathname;
+// 	// 	console.log(pathname);
+// 	// 	e.preventDefault();
+// 	// 	$.ajax({
+// 	// 		url: pathname,
+// 	// 		type: "POST",
+// 	// 		dataType: "string".
+// 	// 		success: function(data) {
+// 	// 			$()
+// 	// 		}
+// 	// 	});
+
 
 });
 

@@ -15,9 +15,9 @@ post '/conversation/:url' do
 	redirect "/conversation/#{@conversation.url}"
 end
 
-get '/conversation/:url/refresh' do 
+post '/conversation/:url/refresh' do 
 	ActiveRecord::Base.include_root_in_json = true
 	@conversation = Conversation.where(url: params["url"]).take
-	p "*"*1000
-	return @conversation.messages.to_json
+	new_messages = (@conversation.messages.size - params[:num_messages].to_i)
+	return @conversation.messages.last(new_messages).to_json if new_messages > 0
 end
