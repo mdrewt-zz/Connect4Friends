@@ -68,11 +68,14 @@ $(document).ready(function() {
   // Chronological order of events
   var player = $.ajax({
     url: "/game/" + game.id + "/playertype",
+    data: { game_id: "1" },
     dataType: JSON,
     success: function(data) { return data }
   });
   
 });
+
+console.log(player)
 
 
 
