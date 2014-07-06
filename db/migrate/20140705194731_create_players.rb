@@ -5,5 +5,6 @@ class CreatePlayers < ActiveRecord::Migration
       t.belongs_to :game
 
       t.timestamps
+    end
   end
 end
