@@ -5,15 +5,13 @@ end
 
 get '/conversation/:url' do 
 	@conversation = Conversation.find_by_url(params[:url])
-	p "HI"*100
-	p @conversation
 	erb :chat
 end
 
-post '/message' do 
-	@conversation = Conversation.find_by_url(params[:url])
+post '/conversation/:url' do 
+	@conversation = Conversation.where(url: params["url"]).take
 	@message = Message.create(params[:message])
 	@conversation.messages << @message
-	erb :chat
+	redirect "/conversation/#{@conversation.url}"
 end
 
