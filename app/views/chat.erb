@@ -1,0 +1,10 @@
+<div id="conversation">
+	<% @conversation.messages.each do |message| %>
+		<%= message.users.first.name %>: <%= message.content %><br><br>
+	<% end %>
+</div>
+<form action="/message" method="post">
+	<input type="text" name="message[content]" placeholder="Your trash talk goes here."><br><br>
+	<input type="hidden" name="url" value="<%= @conversation.url %>">
+	<input type="submit" >
+</form>
