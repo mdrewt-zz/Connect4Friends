@@ -31,6 +31,7 @@ h1{
   right: 100px;
   top: 95px;
   background: white;
+  overflow: auto;
 }
 
 

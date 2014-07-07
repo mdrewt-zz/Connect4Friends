@@ -9,11 +9,12 @@ $(document).ready(function() {
 	    url: window.location.pathname + "/refresh", 
 	    success: function(data) {
 	    	for (i = 0; i < data.length; i++) {
-	    		$('#conversation').append("<div class='message'>" + player.user + ": " + data[i].message.content + "</div><br>");
+	    		$('#conversation').append("<div class='message'>" + data[i].user + ": " + data[i].content + "</div><br>");
 	    	}	   		
 	    },
 	    complete: function() {
-	      setTimeout(refresh, 10000);
+	      setTimeout(refresh, 50);
+	      $('#conversation').scrollTop($('#conversation').prop("scrollHeight"));
 	    }
 	  });
 	};
@@ -22,12 +23,13 @@ $(document).ready(function() {
 	$('#new_message').on("submit", function(e) {
 		e.preventDefault();
 		var new_message = $('#new_message :input').val();
+		$('#new_message')[0].reset();
 		$('#conversation').append("<div class='message'>" + player.user + ": " + new_message + "</div><br>");
 		$.ajax({
-			url: window.location.pathname,
+			url: window.location.pathname + "/chat",
 			type: "POST",
 			dataType: "string",
-			data: { new_message: new_message },
+			data: { new_message : new_message },
 			success: function(data) {
 			}
 		});

@@ -8,6 +8,25 @@ get "/game/:id" do
   end
 end
 
+post '/game/:id/chat' do 
+  game = Game.find_by_id(params[:id])
+  user = User.find_by_id(session[:user_id])
+  message = Message.create(content: params[:new_message])
+  game.messages << message
+  user.messages << message
+  erb :chat
+end
+
+post '/game/:id/refresh' do 
+  ActiveRecord::Base.include_root_in_json = true
+  game = Game.find_by_id(params[:id])
+  new_messages = (game.messages.size - params[:num_messages].to_i)
+  if new_messages > 0
+    return game.messages.last(new_messages).map{|message| {content: message.content, user: message.user.username} }.to_json
+  end
+end
+
+
 post "/game/:id/usertype" do
   game = Game.find(params[:id])
   player = game.players.select {|player| player.user_id == session[:user_id] }.first 
