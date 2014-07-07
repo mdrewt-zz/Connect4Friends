@@ -19,7 +19,6 @@ post '/conversation/:url/refresh' do
 	ActiveRecord::Base.include_root_in_json = true
 	@conversation = Conversation.where(url: params["url"]).take
 	new_messages = (@conversation.messages.size - params[:num_messages].to_i)
-	if new_messages > 0
-		return @conversation.messages.last(new_messages).to_json
-	end
+	return @conversation.messages.last(new_messages).to_json if new_messages > 0
+	erb :chat
 end
