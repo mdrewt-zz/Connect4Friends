@@ -1,25 +1,17 @@
-post '/conversation/new' do
-	@conversation = Conversation.create
-	redirect "/conversation/#{@conversation.url}"
-end
-
-get '/conversation/:url' do 
-	@conversation = Conversation.find_by_url(params[:url])
-	erb :chat
-end
-
-post '/conversation/:url' do 
- 	@conversation = Conversation.where(url: params["url"]).take
- 	@message = Message.create(content: params[:new_message])
- 	@conversation.messages << @message
+post '/game/:id/chat' do 
+	game = Game.find(params[:id])
+	player = game.players.find_by(user_id: session[:user_id])
+ 	message = Message.create(content: params[:new_message])
+ 	game.messages << message
+ 	player.messages << messages
  	erb :chat
 end
 
 post '/conversation/:url/refresh' do 
 	ActiveRecord::Base.include_root_in_json = true
-	@conversation = Conversation.where(url: params["url"]).take
-	new_messages = (@conversation.messages.size - params[:num_messages].to_i)
+	game = Game.where(params[:id]).take
+	new_messages = (game.messages.size - params[:num_messages].to_i)
 	if new_messages > 0
-		return @conversation.messages.last(new_messages).to_json
+		return game.messages.last(new_messages).to_json
 	end
 end

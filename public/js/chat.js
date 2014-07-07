@@ -9,7 +9,7 @@ $(document).ready(function() {
 	    url: window.location.pathname + "/refresh", 
 	    success: function(data) {
 	    	for (i = 0; i < data.length; i++) {
-	    		$('#conversation').append("<div class='message'>" + data[i].message.content + "</div><br>");
+	    		$('#conversation').append("<div class='message'>" + player.user + ": " + data[i].message.content + "</div><br>");
 	    	}	   		
 	    },
 	    complete: function() {
@@ -22,7 +22,7 @@ $(document).ready(function() {
 	$('#new_message').on("submit", function(e) {
 		e.preventDefault();
 		var new_message = $('#new_message :input').val();
-		$('#conversation').append("<div class='message'>" + new_message + "</div><br>");
+		$('#conversation').append("<div class='message'>" + player.user + ": " + new_message + "</div><br>");
 		$.ajax({
 			url: window.location.pathname,
 			type: "POST",
