@@ -29,8 +29,13 @@ get "game/:id/board" do
   return board.to_json
 end
 
-# send move to server
-post "game/:id/move" do
-  data = params[:data]
-  move.create(game_id: params[:id], user_id: data[:user], row: data[:row], column[:column])
+post "game/find" do
+  games = Game.all
+  games.select { |game| game.players }
 end
+
+# send move to server
+# post "game/:id/move" do
+#   data = params[:data]
+#   move.create(game_id: params[:id], user_id: data[:user], row: data[:row], column[:column])
+# end

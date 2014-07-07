@@ -1,6 +1,8 @@
 body {
   background-image:url('http://www.walterlogeman.com/art/images/2008-07-01-circles/circle2.jpg');
-  background-color: #f4f19f;
+  background-color: #fbfcf6;
+  background-repeat: no-repeat;
+  background-position:  220px 0px, center;
 }
 
 h1,h2 {

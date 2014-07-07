@@ -8,7 +8,7 @@ post '/login' do
   #sign in
   @user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
   if @user
-    session[:user_id] = user.id
+    session[:user_id] = @user.id
     redirect "/users/#{@user.id}"
   else
     @invalid_login = true
