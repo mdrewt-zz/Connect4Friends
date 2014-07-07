@@ -1,6 +1,11 @@
 # Tell the user what he is?
 get "/game/:id" do
-  erb :connect
+  @user = User.where(id: session[:user_id]).first
+  if Game.where(id: params[:id]).first
+    erb :connect
+  else
+    return 404
+  end
 end
 
 post "/game/:id/usertype" do
@@ -30,8 +35,9 @@ post "/game/:id/move" do
 end
 
 get "/games/find" do
-  if User.where("id = ?", session[:user_id])
-    games = Game.all.select { |game| game.players.length <= 1 }
+  @user = User.where(id: session[:user_id]).first
+  if @user
+    games = Game.all.select { |game| game.players.length <= 1 && !(game.users.include? User.find(session[:user_id])) }
     game = games.first || Game.create
     type = "player1" if game.players.length == 0
     type = "player2" if game.players.length == 1

@@ -30,16 +30,20 @@
   }
   getPlayer();
 
+
+
   var board = [];
   function getBoard() {
   $.ajax({
       url: window.location.pathname + "/board",
       dataType: "json",
       success: function(data) { board = data; },
-      complete: function() { setTimeout(getBoard, 500); }
+      complete: function() { setTimeout(getBoard, 100); }
     });
   };
   getBoard();
+
+
 
   function updateBoard() {
     for (var column = 0; column < board.length; column++) {
@@ -56,7 +60,9 @@
     };
   };
 
-  setInterval(updateBoard, 500);
+
+
+  setInterval(updateBoard, 100);
 
   $(".column").click(function(e) {
     e.preventDefault();

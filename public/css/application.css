@@ -2,7 +2,7 @@ body {
   background-image:url('http://www.walterlogeman.com/art/images/2008-07-01-circles/circle2.jpg');
   background-color: #fbfcf6;
   background-repeat: no-repeat;
-  background-position:  220px 0px, center;
+  background-position:  15vw 0vw, center;
 }
 
 h1,h2 {
@@ -47,6 +47,7 @@ a {
   background-color:#CC0033;
   font-size: 30px;
 }
+
 .button {
   float: left;
   height: 5vw;
@@ -64,10 +65,11 @@ a {
 }
 
 .container {
+  clear: both;
   margin: 20px auto;
   width: 600px;
   padding: 0px 20px 20px 20px;
-  border: 1px dotted black;
+  border: 1px solid black;
 }
 
 th {
@@ -110,4 +112,9 @@ th {
 	width: 500px;
 	height: 300px;
 	border: 2px dotted gray;
+}
+
+.header {
+  clear: both;
+  overflow: auto;
 }

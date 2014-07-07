@@ -10,9 +10,13 @@
 </head>
 <body>
   <a href="/"><button class="button">Home</button></a>
-  <a href="/login"><button class="button">Log In</button></a>
-  <a href="/join"><button class="button">Sign Up</button></a>
-  <a href=""><button class="button">Profile</button></a><br>
+  <% if @user %>
+    <a href=""><button class="button">Profile</button></a>
+    <a href="/logout"><button class="button">Log Out</button></a>
+  <% else %>
+    <a href="/login"><button class="button">Log In</button></a>
+    <a href="/join"><button class="button">Sign Up</button></a>
+  <% end %>
   <%= yield %>
 </body>
 </html>
