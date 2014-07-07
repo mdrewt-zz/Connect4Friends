@@ -17,7 +17,7 @@
 </div>
 
 <script>
-  var turn = true
+  var last_turn = "";
 
   var player = {};
   var getPlayer = function() {
@@ -31,13 +31,14 @@
   getPlayer();
 
 
-
-  var board = [];
   function getBoard() {
   $.ajax({
       url: window.location.pathname + "/board",
       dataType: "json",
-      success: function(data) { board = data; },
+      success: function(data) {
+        var moves = data;
+        updateBoard(moves);
+      },
       complete: function() { setTimeout(getBoard, 100); }
     });
   };
@@ -45,39 +46,34 @@
 
 
 
-  function updateBoard() {
-    for (var column = 0; column < board.length; column++) {
-      for (var row = 0; row < board[column].length; row++) {
-        var color = "white"
-        if (board[column][row] == "player1") {
-          var color = "red";
-        } else if (board[column][row] == "player2") {
-          var color = "black";
-        };
-
-        $("#" + column + "-" + row).css("background-color", color);
+  function updateBoard(moves) {
+    for (var i = 0; i < moves.length; i++) {
+      if (moves[i].player == "player1") {
+        var color = "red";
+      } else if (moves[i].player == "player2") {
+        var color = "black";
       };
+      $("#" + moves[i].column + "-" + moves[i].row).css("background-color", color);
     };
+    last_turn = moves[moves.length - 1].player
   };
 
 
 
-  setInterval(updateBoard, 100);
-
   $(".column").click(function(e) {
     e.preventDefault();
     
-    if (turn) {
+    if (last_turn != player.type) {
       var column = parseInt($(this).attr("id"));
-      var row = board[column].indexOf(" ");
-      board[column][row] = player.type;
-      // turn = false
+      var row = 0;
+      for (var i = 0; i <= 5; i++) {
+        if ($("#" + column + " div").eq(i).css("background-color") == "rgb(255, 255, 255)") { row = 5 - i; }
+      }
       $.ajax({
         url: window.location.pathname + "/move",
         type: "post",
         dataType: "string",
         data: { row: row, column: column, user: player.user }
-        // success: { updateBoard() }
       });
     } else {
       alert("It's not your turn.");

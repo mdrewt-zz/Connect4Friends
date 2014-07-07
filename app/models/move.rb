@@ -4,6 +4,6 @@ class Move < ActiveRecord::Base
   belongs_to :game
 
   def playertype
-    self.player.type
+    self.player.playertype
   end
 end

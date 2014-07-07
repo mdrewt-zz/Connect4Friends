@@ -19,12 +19,8 @@ end
 get "/game/:id/board" do
   game = Game.find(params[:id])
   
-  board = Array.new(7) { Array.new(6) { " " } }
-  game.moves.each do |move|
-    board[move.column][move.row] = move.player.playertype
-  end
-
-  return board.to_json
+  moves = game.moves.map{ |move| {row: move.row, column: move.column, player: move.playertype} }
+  return moves.to_json
 end
 
 post "/game/:id/move" do
@@ -49,9 +45,3 @@ get "/games/find" do
     redirect "/"
   end
 end
-
-# send move to server
-# post "game/:id/move" do
-#   data = params[:data]
-#   move.create(game_id: params[:id], user_id: data[:user], row: data[:row], column[:column])
-# end
