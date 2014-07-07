@@ -38,13 +38,24 @@ a {
   text-decoration:none; 
 }
 
+form {
+}
+
+input {
+}
+
+#start {
+  font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: red;
+}
 .play {
   width: 30%;
   float: right;
   height: 6vw;
-  background-color:#CC0033;
+  background-color:red;
   font-size: 30px;
 }
+
 .button {
   float: left;
   height: 5vw;
