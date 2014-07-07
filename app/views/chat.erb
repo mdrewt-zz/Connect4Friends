@@ -1,11 +1,11 @@
 <script src="/js/chat.js"></script>
 <div id="conversation">
-	<% @conversation.messages.each do |message| %>
-		<div class="message"><%= message.content %></div><br>
+	<% game = Game.find(params[:id]) %>
+	<% game.messages.each do |message| %>
+		<div class="message"><%= message.user.username %>: <%= message.content %></div><br>
 	<% end %>
 </div>
-<form action="/conversation/<%= @conversation.url%>" method="post" id="new_message">
-	<input type="text" name="message[content]" placeholder="Your trash talk goes here."><br><br>
-	<input type="hidden" name="url" value="<%= @conversation.url %>">
+<form action="/game/<%= game.id%>/chat" method="post" id="new_message">
+	<input type="text" name="message[content]" placeholder="Your trash talk goes here...">
 	<input type="submit" >
 </form>

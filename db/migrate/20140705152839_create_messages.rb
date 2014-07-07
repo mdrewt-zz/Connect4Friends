@@ -3,7 +3,7 @@ class CreateMessages < ActiveRecord::Migration
   	create_table :messages do |t|
   		t.text :content
   		t.belongs_to :user
-  		t.belongs_to :conversation
+  		t.belongs_to :game
 
   		t.timestamps
   	end
