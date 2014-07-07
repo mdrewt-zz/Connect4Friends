@@ -32,10 +32,10 @@ get '/logout' do
   redirect "/"
 end
 
-get '/users/:id' do
+get '/user/:id' do
   @user = User.where(id: session[:user_id]).first
   if @user
-    erb :connect
+    erb :"user/user_page"
   else
     redirect "/"
   end
