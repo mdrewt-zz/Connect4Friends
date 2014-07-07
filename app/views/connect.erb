@@ -153,20 +153,18 @@
   };
 
   function getBoard() {
-    if (!over) {
-      $.ajax({
-        url: window.location.pathname + "/board",
-        dataType: "json",
-        success: function(data) {
-          var moves = data;
-          updateBoard(moves);
-          finished(moves[moves.length - 1])
-        },
-        complete: function() { setTimeout(getBoard, 100); }
-      });
-    };
+    $.ajax({
+      url: window.location.pathname + "/board",
+      dataType: "json",
+      success: function(data) {
+        var moves = data;
+        updateBoard(moves);
+        finished(moves[moves.length - 1])
+      }
+    });
   };
-  getBoard();
+
+  setInterval(getBoard, 100);
 
   $(".column").click(function(e) {
     e.preventDefault();
@@ -187,5 +185,7 @@
       alert("The Game is Over");
     }
   });
+
+  getBoard();
 
 </script>
