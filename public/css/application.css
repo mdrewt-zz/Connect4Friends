@@ -40,7 +40,7 @@ a {
   text-decoration:none; 
 }
 
-.play {
+#play {
   width: 30%;
   float: right;
   height: 6vw;
@@ -75,6 +75,7 @@ th {
 }
 
 .content {
+  clear: left;
   width: 49vw;
   border: 2px solid black;
   margin: auto;

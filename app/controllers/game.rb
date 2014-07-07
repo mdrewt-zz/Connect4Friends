@@ -1,24 +1,17 @@
 # Tell the user what he is?
-post "game/:id/usertype" do
+get "/game/:id" do
+  erb :connect
+end
+
+post "/game/:id/usertype" do
   game = Game.find(params[:id])
-  # first or create, and find out number of players so far?
-  playercount = Players.where("user_id = ?", params[:id]).length
-  case
-  when playercount == 0
-    playertype == "player1"
-  when playercount == 1
-    playertype == "player2"
-  when playercount >= 2
-    playertype == "watcher"
-  end
+  player = game.players.select {|player| player.user_id == session[:user_id] }.first 
 
-  player = Players.where("user_id = ? AND game_id = ?", session[:user_id], params[:game_id]).first_or_create(user_id: session[:user_id], game_id: params[:id], type: playertype)
-
-  return { user: player.username, type: player.type }.to_json
+  return { user: player.username, type: player.playertype }.to_json
 end
 
 # Get the current board from the server
-get "game/:id/board" do
+get "/game/:id/board" do
   game = Game.find(params[:id])
   
   board = Array.new(7) { Array.new(6) { " " } }
@@ -29,9 +22,26 @@ get "game/:id/board" do
   return board.to_json
 end
 
-post "game/find" do
-  games = Game.all
-  games.select { |game| game.players }
+post "/game/:id/move" do
+  game = Game.find(params[:id])
+  player = game.players.find_by(user_id: session[:user_id])
+  turn = game.turns + 1 # try doing in before_create callback in model
+  game.moves.create(player_id: player.id, turn: turn, row: params[:row], column: params[:column])
+end
+
+get "/games/find" do
+  if User.where("id = ?", session[:user_id])
+    games = Game.all.select { |game| game.players.length <= 1 }
+    game = games.first || Game.create
+    type = "player1" if game.players.length == 0
+    type = "player2" if game.players.length == 1
+
+    game.players.create(user_id: session[:user_id], playertype: type)
+
+    redirect "/game/#{game.id}"
+  else
+    redirect "/"
+  end
 end
 
 # send move to server

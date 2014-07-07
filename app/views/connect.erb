@@ -6,7 +6,7 @@
 
     <% 6.times do |j| %>
 
-      <div id=<%= "#{i},#{j}" %> class="row board"></div>
+      <div id=<%= "#{i}-#{5 - j}" %> class="row board"></div>
 
     <% end %>
 
@@ -17,12 +17,18 @@
 </div>
 
 <script>
+  var turn = true
 
-  var player = $.ajax({
-    url: window.location.pathname + "/usertype",
-    dataType: "json",
-    success: function(data) { return data; }
-  });
+  var player = {};
+  var getPlayer = function() {
+    $.ajax({
+      url: window.location.pathname + "/usertype",
+      type: "post",
+      dataType: "json",
+      success: function(data) { player = data; }
+    });
+  }
+  getPlayer();
 
   var board = [];
   function getBoard() {
@@ -38,13 +44,14 @@
   function updateBoard() {
     for (var column = 0; column < board.length; column++) {
       for (var row = 0; row < board[column].length; row++) {
+        var color = "white"
         if (board[column][row] == "player1") {
           var color = "red";
         } else if (board[column][row] == "player2") {
           var color = "black";
         };
 
-        $("#" + column + "," + row).css("background-color", color);
+        $("#" + column + "-" + row).css("background-color", color);
       };
     };
   };
@@ -53,11 +60,22 @@
 
   $(".column").click(function(e) {
     e.preventDefault();
-    // check to see if it's your turn
-    // use jquery to select the first empty row in this column
-    // change background color to correct color
-    // submit ajax request
-
+    
+    if (turn) {
+      var column = parseInt($(this).attr("id"));
+      var row = board[column].indexOf(" ");
+      board[column][row] = player.type;
+      // turn = false
+      $.ajax({
+        url: window.location.pathname + "/move",
+        type: "post",
+        dataType: "string",
+        data: { row: row, column: column, user: player.user }
+        // success: { updateBoard() }
+      });
+    } else {
+      alert("It's not your turn.");
+    };
   });
 
 </script>

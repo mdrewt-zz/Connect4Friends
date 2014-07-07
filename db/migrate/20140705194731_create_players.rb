@@ -3,7 +3,7 @@ class CreatePlayers < ActiveRecord::Migration
     create_table :players do |t|
       t.belongs_to :user
       t.belongs_to :game
-      t.string :type
+      t.string :playertype
 
       t.timestamps
     end
