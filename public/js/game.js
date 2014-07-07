@@ -13,7 +13,7 @@ $(document).ready(function() {
     ["","","","","",""],
   ]
 
-  var player = {};
+  player = {};
   var getPlayer = function() {
     $.ajax({
       url: window.location.pathname + "/usertype",
@@ -23,6 +23,44 @@ $(document).ready(function() {
     });
   }
   getPlayer();
+
+    function refresh() {
+    $('#conversation').scrollTop($('#conversation').prop("scrollHeight"));
+    var num_messages = $('div.message').length;
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      data: { num_messages : num_messages },
+      url: window.location.pathname + "/refresh", 
+      success: function(data) {
+        for (i = 0; i < data.length; i++) {
+          $('#conversation').append("<div class='message'>" + data[i].user + ": " + data[i].content + "</div><br>");
+        }       
+      },
+      complete: function() {
+        setTimeout(refresh, 200);
+      }
+    });
+  };
+  refresh();
+
+  $('#new_message').on("submit", function(e) {
+    e.preventDefault();
+    console.log("Hi i'm being run");
+    var new_message = $('#new_message :input').val();
+    $('#new_message')[0].reset();
+    $('#conversation').append("<div class='message'>" + player.user + ": " + new_message + "</div><br>");
+    $.ajax({
+      url: window.location.pathname + "/chat",
+      type: "POST",
+      dataType: "string",
+      data: { new_message : new_message },
+      success: function(data) {
+      }
+    });
+    e.stopPropagation();
+    return false;
+  });
 
   function diagonalUp(last_move, count) {
     if (board[last_move.column + 1][last_move.row + 1] == last_move.player) {
@@ -168,6 +206,7 @@ $(document).ready(function() {
   });
 
   getBoard();
+
 
   
 });
